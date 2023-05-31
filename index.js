@@ -8,8 +8,11 @@ let displayText= "";
 let runningTotal = 0;
 let pressedSideKey = false;
 const allButtons = document.querySelectorAll("button");
-const nonOperator = ["AC","+/-","%","="];
+const nonOperator = ["AC","+/-","%","=","."];
 const display = document.querySelector(".display>div")
+const roundResult = function (result){
+    return(Math.round(result*100)/100)
+}
 
 const wrapper = document.querySelector(".container");
 
@@ -19,17 +22,17 @@ wrapper.addEventListener('click', (event) => {
     return;
   }
 const pressedKey = event.target.textContent
-console.log(pressedKey)
+
 
 if (pressedKey == "AC"){resetAC()}
 if (pressedKey == "+/-") {
     if(displayText!= "") {
-    pmOperand = plusMinus(displayText);
-    displayText= pmOperand;
+        pmOperand = plusMinus(displayText);
+        displayText= roundResult(pmOperand);
     } else {  
-    pmOperand =plusMinus(runningTotal);
-    runningTotal = pmOperand}
-    display.textContent = pmOperand
+        pmOperand =plusMinus(runningTotal);
+        runningTotal = roundResult(pmOperand)}
+        display.textContent = roundResult(pmOperand)
     }
 if(event.target.classList.contains("top")){
     popEffect(event.target,"topPop");
@@ -41,18 +44,17 @@ if(!event.target.classList.contains("top") && pressedSideKey || pressedKey == "A
 if(event.target.classList.contains("side") && pressedKey != "="){
     event.target.classList.toggle("sideEffect");
     pressedSideKey = true;
-    
  }
 
 
 if (pressedKey == "%") {
     if(displayText!= "") {
     percentOperand = percent(currentNum, displayText);
-    displayText= percentOperand;
+    displayText= roundResult(percentOperand);
     } else {  
     percentOperand =percent(1, runningTotal);
-    runningTotal = percentOperand}
-    display.textContent = percentOperand
+    runningTotal = roundResult(percentOperand)}
+    display.textContent = roundResult(percentOperand)
     }    
 
 if(pressedKey == "="){
@@ -60,7 +62,7 @@ if(pressedKey == "="){
     operate(currentNum,displayText,operator);
   operator = undefined;}
 if(isNaN(pressedKey) &&
-   !nonOperator.includes(pressedKey)){console.log("isNaN Not nonOperator");
+   !nonOperator.includes(pressedKey)){             //console.log("isNaN Not nonOperator");
    if(operator !== undefined){console.log("operator !== undefined");
     result = operate(currentNum,displayText,operator);
     displayText = "";
@@ -69,7 +71,7 @@ if(isNaN(pressedKey) &&
     popEffect(display,"timeOut")
     operator = (pressedKey);
 
-   } else { console.log("else of operator !== undefined");
+   } else {                         //console.log("else of operator !== undefined");
     previousNum = currentNum;
     currentNum = displayText;
     displayText= "";
@@ -78,7 +80,7 @@ if(isNaN(pressedKey) &&
     }
 
 }
-if(!isNaN(pressedKey)){ console.log("!isNAN");
+if(!isNaN(pressedKey)|| pressedKey == "."){                     // console.log("!isNAN");
     popEffect(event.target,"mainButtonPop");
     displayText = displayText + event.target.textContent
     document.querySelector(".display>div").textContent = displayText;
@@ -105,7 +107,7 @@ function operate(num1,num2,operator){
     if(operator == "x") result = multiply(num1,num2);
     if(operator == "÷") result = divide(num1,num2);
     console.log(result);
-    runningTotal = runningTotal + result;
+    runningTotal = roundResult(runningTotal + result);
     displayText = "";
     currentNum=undefined;
     document.querySelector(".display>div").textContent = runningTotal;
