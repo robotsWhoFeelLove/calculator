@@ -13,6 +13,21 @@ const display = document.querySelector(".display>div")
 const roundResult = function (result){
     return(Math.round(result*100)/100)
 }
+function getTime() {
+
+    let date = new Date();
+
+    let hour = date.getHours();
+    hour = (hour > 12 ? hour - 12 : hour)
+
+    let min  = date.getMinutes();
+    min = (min < 10 ? "0" : "") + min;
+
+    document.querySelector(".time").textContent = hour + ":" + min;    
+}
+const calClock = setInterval(getTime,1000);
+calClock;
+
 
 const wrapper = document.querySelector(".container");
 
@@ -87,6 +102,10 @@ if(!isNaN(pressedKey)|| pressedKey == "."){                     // console.log("
 console.log("currentNum: " + currentNum +  "\n operator: "+operator + "\n runningTotal: "+runningTotal + "\n displayText: "+displayText);
 });
 
+function newFunction() {
+    document.querySelector(".time");
+}
+
 function popEffect (item,classAdd) { 
     item.classList.toggle(classAdd);
     setTimeout(function() {
@@ -108,7 +127,7 @@ function operate(num1,num2,operator){
     console.log(result);
     runningTotal = roundResult(runningTotal + result);
     displayText = "";
-    currentNum=undefined;
+    currentNum= runningTotal             //undefined;
     document.querySelector(".display>div").textContent = runningTotal;
     operator = undefined;
     return(displayText);
