@@ -6,6 +6,7 @@ const plusMinus = (a=>(-1)*a);
 const percent = (a =1,b)=> (a*(b/100));
 let displayText= "";
 let runningTotal = 0;
+let pressedSideKey = false;
 const allButtons = document.querySelectorAll("button");
 const nonOperator = ["AC","+/-","%","="];
 const display = document.querySelector(".display>div")
@@ -33,12 +34,15 @@ if (pressedKey == "+/-") {
 if(event.target.classList.contains("top")){
     popEffect(event.target,"topPop");
 }
-// if(!event.target.classList.contains("top") || pressedKey == "AC"){
-//     document.querySelectorAll(".side").forEach().classList.remove("sideEffect");
-// }
-// if(event.target.classList.contains("side") && pressedKey != "="){
-//     event.target.classList.toggle("sideEffect");
-// }
+if(!event.target.classList.contains("top") && pressedSideKey || pressedKey == "AC" && pressedSideKey){
+    document.querySelector(".sideEffect").classList.toggle("sideEffect");
+    pressedSideKey = false;
+}
+if(event.target.classList.contains("side") && pressedKey != "="){
+    event.target.classList.toggle("sideEffect");
+    pressedSideKey = true;
+    
+ }
 
 
 if (pressedKey == "%") {
@@ -52,7 +56,8 @@ if (pressedKey == "%") {
     }    
 
 if(pressedKey == "="){
-operate(currentNum,displayText,operator);
+    popEffect(event.target,"topPop")
+    operate(currentNum,displayText,operator);
   operator = undefined;}
 if(isNaN(pressedKey) &&
    !nonOperator.includes(pressedKey)){console.log("isNaN Not nonOperator");
@@ -63,7 +68,6 @@ if(isNaN(pressedKey) &&
     operator = (pressedKey);
     popEffect(display,"timeOut")
     operator = (pressedKey);
-    // document.querySelector(".display>div").textContent = result;
 
    } else { console.log("else of operator !== undefined");
     previousNum = currentNum;
