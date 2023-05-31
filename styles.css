@@ -1,9 +1,19 @@
+
+/* html { 
+    background: url("./images/Desk.jpg") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  } */
+body{
+    background-color: rgb(231, 226, 226);
+}
 .container{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: ghostwhite;
 }
 button{
     width: 40px;
@@ -12,12 +22,15 @@ button{
     color: whitesmoke;
     background-color: #484343;
     border: 0px;
-    margin: 1px;
+    margin: 2px 2PX;
     font-size:14pt;
 }
 #zero {
-    width: 87px;
-    border-radius: 30%;
+    width: 88Px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 4px 2px;
+    border-radius: 20px;
 }
 .display{
     height: 50px;
@@ -40,6 +53,7 @@ button{
    padding-top: 10px;
    padding-bottom: 40px;
    border: 3px solid #80808080;
+   margin-top: 100px;
 }
 .side {
     background-color: rgb(233, 143, 25);
@@ -76,4 +90,17 @@ button{
     margin-left: 33.33%;
     margin-top: 30px;
     margin-bottom: -28px;
+}
+.timeOut{
+    color: rgb(82, 78, 78);
+}
+.mainButtonPop{
+    background-color: #9e9797;
+}
+.topPop{
+    background-color: whitesmoke;
+}
+.sideEffect{
+    color: rgb(233, 143, 25);
+    background-color: white;
 }
