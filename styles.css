@@ -1,0 +1,79 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: ghostwhite;
+}
+button{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: whitesmoke;
+    background-color: #484343;
+    border: 0px;
+    margin: 1px;
+    font-size:14pt;
+}
+#zero {
+    width: 87px;
+    border-radius: 30%;
+}
+.display{
+    height: 50px;
+    background-color: rgb(4, 2, 2);
+    margin-bottom: 10px;
+    color: white;
+    text-align: end;
+}
+.display>div{
+    padding-top: 10px;
+    padding-right: 5px;
+    font-size: 40px;
+    font-family: Helvetica, sans-serif;
+    font-weight: 100;
+}
+.calculator{
+    background-color: rgb(4, 2, 2);
+   padding: 10px;
+   border-radius: 25px;
+   padding-top: 10px;
+   padding-bottom: 40px;
+   border: 3px solid #80808080;
+}
+.side {
+    background-color: rgb(233, 143, 25);
+}
+.top{
+    background-color: rgb(148, 148, 146);
+    color: rgb(29, 28, 28);
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 50px;
+  
+
+ 
+}
+.icons>img{
+    width:70px;
+    padding-top: 0px;
+    
+}
+.time{
+    color: white;
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+.footer{
+    background-color: white;
+    height: 2px;
+    width: 33.33%;
+    margin-left: 33.33%;
+    margin-top: 30px;
+    margin-bottom: -28px;
+}
