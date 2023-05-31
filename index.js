@@ -1,9 +1,9 @@
 const add = ((a,b)=> Number(a)+Number(b));
 const subtract = ((a,b)=> Number(a)-Number(b));
-const multiply = ((a,b)=>a*b);
-const divide = ((a,b)=>a/b);
-const plusMinus = (a=>(-1)*a);
-const percent = (a =1,b)=> (a*(b/100));
+const multiply = ((a,b)=>Number(a)*Number(b));
+const divide = ((a,b)=>Number(a)/Number(b));
+const plusMinus = (a=>(-1)*Number(a));
+const percent = (a =1,b)=> (Number(a)*(Number(b)/100));
 let displayText= "";
 let runningTotal = 0;
 let pressedSideKey = false;
@@ -37,7 +37,8 @@ if (pressedKey == "+/-") {
 if(event.target.classList.contains("top")){
     popEffect(event.target,"topPop");
 }
-if(!event.target.classList.contains("top") && pressedSideKey || pressedKey == "AC" && pressedSideKey){
+if(!event.target.classList.contains("top") && pressedSideKey || 
+    pressedKey == "AC" && pressedSideKey){
     document.querySelector(".sideEffect").classList.toggle("sideEffect");
     pressedSideKey = false;
 }
@@ -49,30 +50,28 @@ if(event.target.classList.contains("side") && pressedKey != "="){
 
 if (pressedKey == "%") {
     if(displayText!= "") {
-    percentOperand = percent(currentNum, displayText);
-    displayText= roundResult(percentOperand);
+        percentOperand = percent(currentNum, displayText);
+        displayText= roundResult(percentOperand);
     } else {  
-    percentOperand =percent(1, runningTotal);
-    runningTotal = roundResult(percentOperand)}
-    display.textContent = roundResult(percentOperand)
+        percentOperand =percent(1, runningTotal);
+        unningTotal = roundResult(percentOperand)}
+        display.textContent = roundResult(percentOperand)
     }    
 
 if(pressedKey == "="){
     popEffect(event.target,"topPop")
     operate(currentNum,displayText,operator);
-  operator = undefined;}
+    operator = undefined;}
 if(isNaN(pressedKey) &&
    !nonOperator.includes(pressedKey)){             //console.log("isNaN Not nonOperator");
-   if(operator !== undefined){console.log("operator !== undefined");
+   if(operator !== undefined){            //console.log("operator !== undefined");
     result = operate(currentNum,displayText,operator);
     displayText = "";
-    currentNum = displayText
-    operator = (pressedKey);
+    currentNum = displayText;
     popEffect(display,"timeOut")
     operator = (pressedKey);
 
    } else {                         //console.log("else of operator !== undefined");
-    previousNum = currentNum;
     currentNum = displayText;
     displayText= "";
     popEffect(display,"timeOut")
@@ -85,7 +84,7 @@ if(!isNaN(pressedKey)|| pressedKey == "."){                     // console.log("
     displayText = displayText + event.target.textContent
     document.querySelector(".display>div").textContent = displayText;
 }
-console.log("currentNum: " + currentNum + "\n previousNum: "+ previousNum + "\n operator: "+operator + "\n runningTotal: "+runningTotal + "\n displayText: "+displayText);
+console.log("currentNum: " + currentNum +  "\n operator: "+operator + "\n runningTotal: "+runningTotal + "\n displayText: "+displayText);
 });
 
 function popEffect (item,classAdd) { 
