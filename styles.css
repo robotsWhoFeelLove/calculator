@@ -61,6 +61,7 @@ button{
 .top{
     background-color: rgb(148, 148, 146);
     color: rgb(29, 28, 28);
+    text-align: center;
 }
 .header{
     display: flex;
