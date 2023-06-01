@@ -73,10 +73,12 @@ if(pressedKey == "="){
     }
 if(!isNaN(pressedKey)|| pressedKey == "."){                      console.log("!isNAN");
     popEffect(event.target,"mainButtonPop");
-    if(!isDisplaySum){
-        displayText = displayText + pressedKey.replace(".","0.");
+    if(!isDisplaySum){                  console.log("!isDisplaySum");
+        // if(display.textContent == 0){displayText = pressedKey.replace(".","0.");}
+        // else {
+            displayText = displayText + pressedKey; //}
         showText(displayText);
-    } else {
+     }else {                console.log("else of !isDisplaySum");
         displayText = pressedKey;
         showText(displayText);
         isDisplaySum = false;
@@ -144,5 +146,7 @@ function resetAC () {
 }
 
 function showText (someText){
-    display.textContent=(Math.round(someText*100)/100);
+   if(someText == "."){display.textContent = someText;
+    } else {
+    display.textContent=(Math.round(someText*100)/100);}
 }
