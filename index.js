@@ -1,7 +1,15 @@
 const add = ((a,b)=> Number(a)+Number(b));
 const subtract = ((a,b)=> Number(a)-Number(b));
 const multiply = ((a,b)=>Number(a)*Number(b));
-const divide = ((a,b)=>Number(a)/Number(b));
+const divide = (a, b) => {
+    if (b == 0) {
+        returnError("divide by zero");
+    } else {
+        return(a/b);
+    }
+}
+
+
 const plusMinus = (a=>(-1)*Number(a));
 const percent = (b,a =1)=> (Number(a)*(Number(b)/100));
 let otherNum;
@@ -146,7 +154,56 @@ function resetAC () {
 }
 
 function showText (someText){
-   if(someText == "."){display.textContent = someText;
+    if(someText == "." || someText == "Error"){display.textContent = someText;
     } else {
-    display.textContent=(Math.round(someText*100)/100);}
+        if(isNaN(display.textContent=(Math.round(someText*100)/100))){
+            display.textContent = "Error"
+        } else {
+        display.textContent=(Math.round(someText*1000)/1000);
+        }
+    }
+};
+   
+ function returnError (error){
+    display.textContent = "Error";
+    let rows = document.getElementsByClassName('row');
+
+while(rows[0]) {
+    rows[0].parentNode.removeChild(rows[0]);
 }
+
+    document.querySelector(".siri").innerHTML= "<img src='./images/siri.gif' alt=''>"
+  
+    const errorDiv = document.createElement("div");
+    errorDiv.classList.add("siriMessage");
+    siriText.push(error);
+   let count = 0;
+
+   let audio = new Audio('./audio/GLaDOS-558187.wav');
+    let getText = setInterval(function(){
+        count +=1;
+
+        if(count === errorArray1.length-1){
+            clearInterval(getText)
+        }
+    siriText.push(errorArray1[count]);
+    document.querySelector(".siriText").textContent = siriText.join(" ");
+    // if (count === errorArray1.length-1){
+    //     errorArray2 = errorMessage2.split(" ");
+    // }
+    },500);
+    audio.play();
+
+    let resetCalc = setTimeout(function(){
+        window.location.reload()},5000);
+    resetCalc()
+    
+ }
+
+
+ 
+let errorMessage1 = " not possible. Please make a valid request"
+let errorMessage2 = " not possible. Please see this article for more details: https://en.wikipedia.org/wiki/Division_by_zero"
+let errorArray1 = errorMessage1.split(" ");
+let siriText= [];
+function go (){siriText.push(errorArray1[0])};
