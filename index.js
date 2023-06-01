@@ -3,9 +3,14 @@ const subtract = ((a,b)=> Number(a)-Number(b));
 const multiply = ((a,b)=>Number(a)*Number(b));
 const divide = ((a,b)=>Number(a)/Number(b));
 const plusMinus = (a=>(-1)*Number(a));
-const percent = (a =1,b)=> (Number(a)*(Number(b)/100));
-let displayText= "";
+const percent = (b,a =1)=> (Number(a)*(Number(b)/100));
+let otherNum;
+let operationResult;
+let operator;
+let displayText = "";
 let runningTotal = 0;
+let isDisplaySum = false;
+
 let pressedSideKey = false;
 const allButtons = document.querySelectorAll("button");
 const nonOperator = ["AC","+/-","%","=","."];
@@ -14,20 +19,17 @@ const roundResult = function (result){
     return(Math.round(result*100)/100)
 }
 function getTime() {
-
     let date = new Date();
-
     let hour = date.getHours();
-    hour = (hour > 12 ? hour - 12 : hour)
+        hour = (hour > 12 ? hour - 12 : hour)
 
     let min  = date.getMinutes();
-    min = (min < 10 ? "0" : "") + min;
+        min = (min < 10 ? "0" : "") + min;
 
     document.querySelector(".time").textContent = hour + ":" + min;    
 }
 const calClock = setInterval(getTime,1000);
 calClock;
-
 
 const wrapper = document.querySelector(".container");
 
@@ -37,18 +39,8 @@ wrapper.addEventListener('click', (event) => {
     return;
   }
 const pressedKey = event.target.textContent
-
-
-if (pressedKey == "AC"){resetAC()}
-if (pressedKey == "+/-") {
-    if(displayText!= "") {
-        pmOperand = plusMinus(displayText);
-        displayText= roundResult(pmOperand);
-    } else {  
-        pmOperand =plusMinus(runningTotal);
-        runningTotal = roundResult(pmOperand)}
-        display.textContent = roundResult(pmOperand)
-    }
+console.log(pressedKey);
+//Decorative effects
 if(event.target.classList.contains("top")){
     popEffect(event.target,"topPop");
 }
@@ -62,44 +54,55 @@ if(event.target.classList.contains("side") && pressedKey != "="){
     pressedSideKey = true;
  }
 
-
+if (pressedKey == "AC"){resetAC()}
+if (pressedKey == "+/-" &&
+    displayText!= "") {
+        displayText = plusMinus(displayText);
+        showText(displayText);
+    }
 if (pressedKey == "%") {
-    if(displayText!= "") {
-        percentOperand = percent(currentNum, displayText);
-        displayText= roundResult(percentOperand);
-    } else {  
-        percentOperand =percent(1, runningTotal);
-        unningTotal = roundResult(percentOperand)}
-        display.textContent = roundResult(percentOperand)
+    displayText = percent(displayText,otherNum);
+    showText(displayText);
     }    
-
 if(pressedKey == "="){
-    popEffect(event.target,"topPop")
-    operate(currentNum,displayText,operator);
-    operator = undefined;}
+    displayText=operate(otherNum,displayText,operator);
+    isDisplaySum=true;
+    operator = undefined;
+    popEffect(event.target,"topPop");
+    showText(displayText);
+    }
+if(!isNaN(pressedKey)|| pressedKey == "."){                      console.log("!isNAN");
+    popEffect(event.target,"mainButtonPop");
+    if(!isDisplaySum){
+        displayText = displayText + pressedKey.replace(".","0.");
+        showText(displayText);
+    } else {
+        displayText = pressedKey;
+        showText(displayText);
+        isDisplaySum = false;
+    }
+} else {
 if(isNaN(pressedKey) &&
-   !nonOperator.includes(pressedKey)){             //console.log("isNaN Not nonOperator");
-   if(operator !== undefined){            //console.log("operator !== undefined");
-    result = operate(currentNum,displayText,operator);
-    displayText = "";
-    currentNum = displayText;
-    popEffect(display,"timeOut")
-    operator = (pressedKey);
-
-   } else {                         //console.log("else of operator !== undefined");
-    currentNum = displayText;
+   !nonOperator.includes(pressedKey)){             console.log("isNaN Not nonOperator");
+   if(operator !== undefined){console.log(operator);
+        otherNum =  operate(otherNum,displayText,operator);
+        displayText = "";
+        isDisplaySum = true;
+        operator = pressedKey;
+        showText(otherNum);
+   } else {                         console.log("else of operator !== undefined");
+    otherNum = displayText;
     displayText= "";
     popEffect(display,"timeOut")
     operator = (pressedKey);
+    isDisplaySum = false;
+    }
     }
 
 }
-if(!isNaN(pressedKey)|| pressedKey == "."){                     // console.log("!isNAN");
-    popEffect(event.target,"mainButtonPop");
-    displayText = displayText + event.target.textContent
-    document.querySelector(".display>div").textContent = displayText;
-}
-console.log("currentNum: " + currentNum +  "\n operator: "+operator + "\n runningTotal: "+runningTotal + "\n displayText: "+displayText);
+    
+
+console.log("otherNum: " + otherNum +  "\n operator: "+ operator + "\n runningTotal: "+runningTotal + "\n displayText: "+displayText+ "\n result: "+operationResult);
 });
 
 function newFunction() {
@@ -114,9 +117,6 @@ function popEffect (item,classAdd) {
 
 
 
-let currentNum;
-let previousNum;
-let operator;
 
 function operate(num1,num2,operator){
     let result;
@@ -124,25 +124,25 @@ function operate(num1,num2,operator){
     if(operator == "-") result = subtract(num1,num2);
     if(operator == "x") result = multiply(num1,num2);
     if(operator == "÷") result = divide(num1,num2);
-    console.log(result);
-    runningTotal = roundResult(runningTotal + result);
-    displayText = "";
-    currentNum= runningTotal             //undefined;
-    document.querySelector(".display>div").textContent = runningTotal;
+
+    otherNum = undefined;
+    operationResult = result;
     operator = undefined;
-    return(displayText);
+    console.log(operator);
+    console.log(result);             //undefined;
+    return(result);
 
 }
 
 function resetAC () {
-    currentNum=undefined;
-    previousNum=undefined;
+    otherNum=undefined;
     operator=undefined;
-    displayText="";
-    runningTotal=0;
-    const resetText = 0;
-    document.querySelector(".display>div").textContent = resetText ;
+    displayText=0;
+    document.querySelector(".display>div").textContent = displayText ;
+    isDisplaySum = true;
     console.log("Reset");
 }
 
-
+function showText (someText){
+    display.textContent=(Math.round(someText*100)/100);
+}
