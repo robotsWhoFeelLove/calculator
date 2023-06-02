@@ -183,15 +183,14 @@ const calClock = setInterval(getTime,1000);
 calClock;
 
   
-//Error Function
+// Error Function
  function returnError (error){
     display.textContent = "Error";
 
-    let rows = document.getElementsByClassName('row');
-
-    while(rows[0]) {
-        rows[0].parentNode.removeChild(rows[0]);
-    }
+    let rows =  document.querySelectorAll('.row');
+    rows.forEach(row => {
+        row.classList.add("dim-effect")  
+    });
 
     document.querySelector(".siri").innerHTML= "<img src='./images/siri.gif' alt=''>"
   
